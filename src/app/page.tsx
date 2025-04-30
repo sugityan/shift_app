@@ -20,7 +20,7 @@ const HomePage = () => {
       <div className="flex items-center justify-center h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <p className="mt-4 text-gray-600">読み込み中...</p>
         </div>
       </div>
     );
@@ -31,19 +31,18 @@ const HomePage = () => {
       {/* Hero section with gradient background */}
       <div className="primary-gradient py-20 px-6 text-white">
         <div className="container-centered text-center">
-          <h1 className="text-5xl font-bold mb-6">Shift Tracker</h1>
+          <h1 className="text-5xl font-bold mb-6">シフト管理</h1>
           <p className="text-xl mb-10 max-w-2xl mx-auto">
-            Your simple solution for tracking work shifts, calculating hours,
-            and managing your income.
+            勤務シフトの追跡、労働時間の計算、収入の管理のためのシンプルなソリューション。
           </p>
           <div className="flex justify-center space-x-4">
             <Link href="/login">
               <Button variant="secondary" size="lg">
-                Sign In
+                ログイン
               </Button>
             </Link>
             <Link href="/signup">
-              <Button size="lg">Create Account</Button>
+              <Button size="lg">アカウント作成</Button>
             </Link>
           </div>
         </div>
@@ -53,7 +52,7 @@ const HomePage = () => {
       <div className="bg-white py-20 px-6">
         <div className="container-centered">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            Track Your Shifts With Ease
+            簡単にシフトを管理
           </h2>
 
           <div className="grid md:grid-cols-3 gap-10">
@@ -74,9 +73,9 @@ const HomePage = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-medium mb-2">Calendar View</h3>
+              <h3 className="text-xl font-medium mb-2">カレンダー表示</h3>
               <p className="text-gray-600">
-                See all your shifts in an intuitive calendar interface.
+                直感的なカレンダーですべてのシフトを確認できます。
               </p>
             </div>
 
@@ -97,10 +96,8 @@ const HomePage = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-medium mb-2">Income Tracking</h3>
-              <p className="text-gray-600">
-                Automatically calculate your earnings for each shift.
-              </p>
+              <h3 className="text-xl font-medium mb-2">収入管理</h3>
+              <p className="text-gray-600">各シフトの収入を自動計算します。</p>
             </div>
 
             <div className="card p-6 text-center">
@@ -120,9 +117,9 @@ const HomePage = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-medium mb-2">Multiple Companies</h3>
+              <h3 className="text-xl font-medium mb-2">複数の勤務先管理</h3>
               <p className="text-gray-600">
-                Manage shifts for different employers in one place.
+                複数の勤務先のシフトを一括管理できます。
               </p>
             </div>
           </div>
@@ -133,7 +130,7 @@ const HomePage = () => {
       <footer className="bg-gray-800 text-white py-8 mt-auto">
         <div className="container-centered text-center">
           <p>
-            © {new Date().getFullYear()} Shift Tracker App. All rights reserved.
+            © {new Date().getFullYear()} シフト管理アプリ. All rights reserved.
           </p>
         </div>
       </footer>

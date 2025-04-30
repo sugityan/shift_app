@@ -3,13 +3,51 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { Calendar, momentLocalizer, SlotInfo, Views } from "react-big-calendar";
 import moment from "moment";
+import "moment/locale/ja"; // 日本語ロケールをインポート
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import useAuth from "@/hooks/useAuth";
 import { type Shift, type Company } from "@/types";
 import ShiftForm from "../shifts/ShiftForm";
 import { shiftService } from "@/services/shiftService";
 
+// 日本語ロケールを設定
+moment.locale("ja");
 const localizer = momentLocalizer(moment);
+
+// 曜日と月の名前を日本語に設定するためのオブジェクト
+// Messages type definition
+interface CalendarMessages {
+  allDay: string;
+  previous: string;
+  next: string;
+  today: string;
+  month: string;
+  week: string;
+  day: string;
+  agenda: string;
+  date: string;
+  time: string;
+  event: string;
+  showMore: (total: number) => string;
+  noEventsInRange: string;
+}
+
+// Calendar messages with Japanese translations
+const messages: CalendarMessages = {
+  allDay: "終日",
+  previous: "前月へ",
+  next: "次月へ",
+  today: "今日",
+  month: "月",
+  week: "週",
+  day: "日",
+  agenda: "予定表",
+  date: "日付",
+  time: "時間",
+  event: "イベント",
+  showMore: (total: number) => `+ さらに ${total} 件`,
+  noEventsInRange: "この期間にはシフトがありません",
+};
 
 interface CalendarEvent {
   id: string;
@@ -231,7 +269,9 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
 
   if (loading && events.length === 0) {
     return (
-      <div className="py-8 text-center text-gray-600">Loading calendar...</div>
+      <div className="py-8 text-center text-gray-600">
+        カレンダーを読み込み中...
+      </div>
     );
   }
 
@@ -241,8 +281,8 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
         className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
         role="alert"
       >
-        <strong className="font-bold">Error!</strong>
-        <span className="block sm:inline"> {error}</span>
+        <strong className="font-bold">エラー!</strong>
+        <span className="block sm.inline"> {error}</span>
       </div>
     );
   }
@@ -319,7 +359,7 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
           onClick={() => handleNavigate(new Date())}
           className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors shadow-sm"
         >
-          Today
+          今日
         </button>
       </div>
 
@@ -329,10 +369,10 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
           <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold">
-                Add Shift for{" "}
                 {selectedDate
-                  ? moment(selectedDate).format("MMMM D, YYYY")
-                  : "New Date"}
+                  ? moment(selectedDate).format("YYYY年M月D日")
+                  : "新規"}
+                のシフト追加
               </h2>
               <button
                 onClick={() => setShowForm(false)}
@@ -366,7 +406,7 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
                 onClick={() => setShowForm(false)}
                 className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
               >
-                Cancel
+                キャンセル
               </button>
             </div>
           </div>
@@ -377,13 +417,13 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
       <div className="bg-white rounded-lg shadow p-4 mb-4">
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <p className="text-sm text-gray-500">Total Hours</p>
+            <p className="text-sm text-gray-500">合計時間</p>
             <p className="text-2xl font-semibold">
-              {monthlyStats.totalHours} hrs
+              {monthlyStats.totalHours} 時間
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Estimated Salary</p>
+            <p className="text-sm text-gray-500">予想収入</p>
             <p className="text-2xl font-semibold">
               ¥{monthlyStats.totalSalary.toLocaleString()}
             </p>
@@ -435,6 +475,7 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
             monthHeaderFormat: "YYYY年M月",
             weekdayFormat: "ddd",
           }}
+          messages={messages}
         />
       </div>
 

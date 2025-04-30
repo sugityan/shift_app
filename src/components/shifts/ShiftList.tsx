@@ -84,7 +84,7 @@ const ShiftList = ({
 
   // Handle shift deletion
   const handleDeleteShift = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this shift?")) return;
+    if (!confirm("このシフトを削除してもよろしいですか？")) return;
 
     try {
       setLoading(true);
@@ -92,21 +92,21 @@ const ShiftList = ({
 
       if (error) {
         console.error("Error deleting shift:", error);
-        setError("Failed to delete shift");
+        setError("シフトの削除に失敗しました");
       } else {
         // Refresh the list
         await fetchShifts();
       }
     } catch (err) {
       console.error("Error:", err);
-      setError("An unexpected error occurred");
+      setError("予期せぬエラーが発生しました");
     } finally {
       setLoading(false);
     }
   };
 
   if (loading && shifts.length === 0)
-    return <div className="py-4 text-gray-600">Loading shifts...</div>;
+    return <div className="py-4 text-gray-600">シフトを読み込み中...</div>;
 
   if (error) {
     return (
@@ -114,7 +114,7 @@ const ShiftList = ({
         className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
         role="alert"
       >
-        <strong className="font-bold">Error!</strong>
+        <strong className="font-bold">エラー!</strong>
         <span className="block sm:inline"> {error}</span>
       </div>
     );
@@ -123,8 +123,8 @@ const ShiftList = ({
   if (shifts.length === 0) {
     return (
       <div className="mt-8">
-        <h2 className="text-xl font-bold mb-4">Recorded Shifts</h2>
-        <p className="text-gray-500 italic">No shifts recorded yet.</p>
+        <h2 className="text-xl font-bold mb-4">記録されたシフト</h2>
+        <p className="text-gray-500 italic">まだシフトが記録されていません。</p>
       </div>
     );
   }
@@ -143,15 +143,15 @@ const ShiftList = ({
   return (
     <div className="mt-8">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">Recorded Shifts</h2>
+        <h2 className="text-xl font-bold">記録されたシフト</h2>
         <div className="text-right">
           <p className="text-sm text-gray-600">
-            Total Hours:{" "}
+            合計時間:{" "}
             <span className="font-semibold">{totalHours.toFixed(2)}</span>
           </p>
           <p className="text-sm text-gray-600">
-            Total Pay:{" "}
-            <span className="font-semibold">${totalPay.toFixed(2)}</span>
+            合計収入:{" "}
+            <span className="font-semibold">￥{totalPay.toFixed(2)}</span>
           </p>
         </div>
       </div>
@@ -161,23 +161,23 @@ const ShiftList = ({
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Date
+                日付
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Company
+                会社
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Hours
+                時間
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Pay
+                給与
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Time
+                勤務時間
               </th>
               {showControls && (
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
+                  操作
                 </th>
               )}
             </tr>
@@ -213,7 +213,7 @@ const ShiftList = ({
                         onClick={() => handleDeleteShift(shift.id)}
                         className="text-xs bg-red-500 hover:bg-red-600"
                       >
-                        Delete
+                        削除
                       </Button>
                     </td>
                   )}
