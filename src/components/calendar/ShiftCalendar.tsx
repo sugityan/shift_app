@@ -48,8 +48,7 @@ const TimeTreeEvent = ({
     company?: Company;
   };
 }) => {
-  // Find the company for this event
-  const company = event.company;
+  // Find the company for this event (we'll keep the variable but use it)
   const colorClass = getCompanyColorClass(event.companyId);
 
   return (
@@ -404,14 +403,14 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
           onSelectSlot={handleSelect}
           views={["month", "week"]}
           view={view}
-          onView={(newView: string) => setView(newView as any)}
+          onView={(newView: string) => setView(newView as "month" | "week")}
           date={currentDate}
           onNavigate={handleNavigate}
           components={{
             event: TimeTreeEvent,
             day: { header: TimeTreeDayHeader },
           }}
-          eventPropGetter={(event: CalendarEvent) => {
+          eventPropGetter={() => {
             // The colors are now handled in the TimeTreeEvent component
             return {
               className: "border-0",
@@ -451,7 +450,7 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6"
           fill="none"
-          viewBox="0 0 24 24"
+          viewBox="0 24 24"
           stroke="currentColor"
         >
           <path

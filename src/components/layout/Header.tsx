@@ -3,27 +3,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import useAuth from "@/hooks/useAuth";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
   const { user, signOut } = useAuth();
   const pathname = usePathname();
-  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentView, setCurrentView] = useState("monthly"); // 'monthly' or 'weekly'
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const userDropdownRef = useRef<HTMLDivElement>(null);
-
-  // 現在の日付を取得
-  const today = new Date();
-  const currentYear = today.getFullYear();
-  const currentMonth = today.getMonth() + 1;
-
-  // 表示する年月（状態として保持）
-  const [displayDate, setDisplayDate] = useState({
-    year: currentYear,
-    month: currentMonth,
-  });
 
   const handleSignOut = async () => {
     try {
@@ -59,32 +47,6 @@ const Header = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  // 日付操作の関数
-  const goToPrevMonth = () => {
-    setDisplayDate((prev) => {
-      if (prev.month === 1) {
-        return { year: prev.year - 1, month: 12 };
-      }
-      return { year: prev.year, month: prev.month - 1 };
-    });
-  };
-
-  const goToNextMonth = () => {
-    setDisplayDate((prev) => {
-      if (prev.month === 12) {
-        return { year: prev.year + 1, month: 1 };
-      }
-      return { year: prev.year, month: prev.month + 1 };
-    });
-  };
-
-  const goToToday = () => {
-    setDisplayDate({
-      year: currentYear,
-      month: currentMonth,
-    });
-  };
 
   // Check if user is logged in
   const isLoggedIn = !!user;
