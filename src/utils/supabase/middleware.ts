@@ -40,7 +40,7 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   // パブリックなルートのリスト - 認証なしでアクセス可能
-  const publicRoutes = ["/login", "/signup", "/auth"];
+  const publicRoutes = ["/", "/login", "/signup", "/auth"];
 
   // パブリックルートかどうかをチェック
   const isPublicRoute = publicRoutes.some((route) =>

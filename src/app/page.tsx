@@ -1,19 +1,10 @@
 "use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 
 const HomePage = () => {
   const { user, loading } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!loading && user) {
-      router.push("/calendar");
-    }
-  }, [user, loading, router]);
 
   if (loading) {
     return (
@@ -36,14 +27,22 @@ const HomePage = () => {
             勤務シフトの追跡、労働時間の計算、収入の管理のためのシンプルなソリューション。
           </p>
           <div className="flex justify-center space-x-4">
-            <Link href="/login">
-              <Button variant="secondary" size="lg">
-                ログイン
-              </Button>
-            </Link>
-            <Link href="/signup">
-              <Button size="lg">アカウント作成</Button>
-            </Link>
+            {user ? (
+              <Link href="/calendar">
+                <Button size="lg">カレンダー</Button>
+              </Link>
+            ) : (
+              <>
+                <Link href="/login">
+                  <Button variant="secondary" size="lg">
+                    ログイン
+                  </Button>
+                </Link>
+                <Link href="/signup">
+                  <Button size="lg">アカウント作成</Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
