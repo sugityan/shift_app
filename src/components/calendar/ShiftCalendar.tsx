@@ -282,7 +282,7 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
         role="alert"
       >
         <strong className="font-bold">エラー!</strong>
-        <span className="block sm.inline"> {error}</span>
+        <span className="block sm:inline"> {error}</span>
       </div>
     );
   }
