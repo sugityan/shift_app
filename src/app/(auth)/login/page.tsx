@@ -34,7 +34,7 @@ const LoginPage = () => {
       }
     } catch (err) {
       console.error("Login error:", err);
-      setError("An unexpected error occurred. Please try again.");
+      setError("予期せぬエラーが発生しました。もう一度試してください。");
     } finally {
       setLoading(false);
     }
@@ -46,11 +46,9 @@ const LoginPage = () => {
         <div className="card p-8 sm:p-10 shadow-xl rounded-xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-3 primary-gradient bg-clip-text text-transparent">
-              Welcome Back
+              おかえりなさい
             </h1>
-            <p className="text-gray-600">
-              Sign in to your Shift Tracker account
-            </p>
+            <p className="text-gray-600">シフト管理アプリにログイン</p>
           </div>
 
           {error && (
@@ -65,20 +63,20 @@ const LoginPage = () => {
           <form onSubmit={handleLogin} className="space-y-6">
             <Input
               type="email"
-              placeholder="Email address"
+              placeholder="メールアドレス"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              label="Email"
+              label="メールアドレス"
               className="transition-all duration-200"
             />
             <Input
               type="password"
-              placeholder="Password"
+              placeholder="パスワード"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              label="Password"
+              label="パスワード"
               className="transition-all duration-200"
             />
 
@@ -111,22 +109,22 @@ const LoginPage = () => {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  Signing in...
+                  ログイン中...
                 </span>
               ) : (
-                "Sign In"
+                "ログイン"
               )}
             </Button>
           </form>
 
           <div className="mt-8 text-center">
             <p className="text-gray-600">
-              Don&apos;t have an account?{" "}
+              アカウントをお持ちでない場合{" "}
               <Link
                 href="/signup"
                 className="text-blue-600 hover:text-blue-800 font-medium transition-colors underline"
               >
-                Sign up
+                新規登録
               </Link>
             </p>
           </div>

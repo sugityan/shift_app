@@ -26,14 +26,14 @@ const SettingsPage = () => {
       const { data, error } = await companyService.getUserCompanies(user.id);
 
       if (error) {
-        setError("Failed to load companies");
+        setError("会社情報の読み込みに失敗しました");
         console.error("Error fetching companies:", error);
       } else {
         setCompanies(data || []);
       }
     } catch (err) {
       console.error("Error:", err);
-      setError("An unexpected error occurred");
+      setError("予期せぬエラーが発生しました");
     } finally {
       setLoading(false);
     }
@@ -60,14 +60,14 @@ const SettingsPage = () => {
       const { error } = await companyService.deleteCompany(id);
 
       if (error) {
-        setError("Failed to delete company");
+        setError("会社の削除に失敗しました");
         console.error("Error deleting company:", error);
       } else {
         await fetchCompanies();
       }
     } catch (err) {
       console.error("Error:", err);
-      setError("An unexpected error occurred");
+      setError("予期せぬエラーが発生しました");
     } finally {
       setLoading(false);
     }
@@ -78,7 +78,7 @@ const SettingsPage = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="mt-4 text-black">Loading...</p>
+          <p className="mt-4 text-black">読み込み中...</p>
         </div>
       </div>
     );
@@ -93,7 +93,7 @@ const SettingsPage = () => {
       <Header />
       <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 fade-in">
         <h1 className="text-3xl font-bold text-center mb-8 text-black">
-          Company Management
+          会社管理
         </h1>
 
         {error && (
@@ -114,7 +114,7 @@ const SettingsPage = () => {
                   clipRule="evenodd"
                 ></path>
               </svg>
-              <strong className="font-medium">Error:</strong>
+              <strong className="font-medium">エラー:</strong>
               <span className="ml-2">{error}</span>
             </div>
           </div>
@@ -122,7 +122,7 @@ const SettingsPage = () => {
 
         <div className="card p-6 sm:p-8 mb-8 hover:shadow-xl transition-shadow duration-300 rounded-xl bg-white">
           <h2 className="text-xl font-semibold mb-4 text-black">
-            {editingCompany ? "Edit Company" : "Add New Company"}
+            {editingCompany ? "会社を編集" : "新しい会社を追加"}
           </h2>
           <CompanyForm
             company={editingCompany}
@@ -133,12 +133,12 @@ const SettingsPage = () => {
         {loading && companies.length === 0 ? (
           <div className="card p-12 text-center text-black rounded-xl bg-white">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
-            <p className="mt-4">Loading companies...</p>
+            <p className="mt-4">会社情報を読み込み中...</p>
           </div>
         ) : (
           <div className="card p-6 sm:p-8 hover:shadow-xl transition-shadow duration-300 rounded-xl bg-white">
             <h2 className="text-xl font-semibold mb-4 text-black">
-              Your Companies
+              登録済みの会社
             </h2>
             <CompanyList
               companies={companies}

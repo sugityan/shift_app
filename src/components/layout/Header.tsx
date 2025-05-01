@@ -159,13 +159,13 @@ const Header = () => {
                   href="/login"
                   className="px-3 py-1 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors duration-200"
                 >
-                  Login
+                  ログイン
                 </Link>
                 <Link
                   href="/signup"
                   className="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1 rounded-md text-sm font-medium transition-all duration-200 hover:shadow-md"
                 >
-                  Sign Up
+                  新規登録
                 </Link>
               </>
             )}
@@ -290,14 +290,14 @@ const Header = () => {
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Login
+                ログイン
               </Link>
               <Link
                 href="/signup"
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Sign Up
+                新規登録
               </Link>
             </>
           )}

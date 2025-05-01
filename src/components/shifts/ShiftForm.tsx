@@ -75,13 +75,13 @@ const ShiftForm = ({
 
     try {
       if (!user) {
-        setError("You must be logged in to add shifts");
+        setError("シフトを追加するにはログインが必要です");
         return;
       }
 
       // Validate time values
       if (startTime >= endTime) {
-        setError("End time must be after start time");
+        setError("終了時間は開始時間より後である必要があります");
         return;
       }
 
@@ -94,7 +94,7 @@ const ShiftForm = ({
       });
 
       if (error) {
-        setError("Failed to add shift: " + error.message);
+        setError("シフトの追加に失敗しました: " + error.message);
       } else {
         // Reset form and notify parent
         onShiftAdded();
@@ -106,7 +106,7 @@ const ShiftForm = ({
       }
     } catch (err) {
       console.error("Error adding shift:", err);
-      setError("An unexpected error occurred");
+      setError("予期せぬエラーが発生しました");
     } finally {
       setLoading(false);
     }
@@ -153,7 +153,7 @@ const ShiftForm = ({
       {/* Company selection (TimeTree-like) */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Company
+          会社
         </label>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {companies.map((company) => (
@@ -173,7 +173,7 @@ const ShiftForm = ({
             >
               <div className="font-medium">{company.name}</div>
               <div className="text-sm text-gray-600">
-                ¥{company.hourly_wage}/hr
+                ¥{company.hourly_wage}/時間
               </div>
             </div>
           ))}
@@ -183,7 +183,7 @@ const ShiftForm = ({
       {/* Date input with TimeTree-like styling */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Date
+          日付
         </label>
         <input
           type="date"
@@ -198,7 +198,7 @@ const ShiftForm = ({
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Start Time
+            開始時間
           </label>
           <input
             type="time"
@@ -210,7 +210,7 @@ const ShiftForm = ({
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            End Time
+            終了時間
           </label>
           <input
             type="time"
@@ -225,21 +225,21 @@ const ShiftForm = ({
       {/* Memo field (TimeTree-like) */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Memo (Optional)
+          メモ (任意)
         </label>
         <textarea
           value={memo}
           onChange={(e) => setMemo(e.target.value)}
           rows={2}
           className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-          placeholder="Add notes about this shift..."
+          placeholder="このシフトに関するメモを追加..."
         />
       </div>
 
       {/* Estimated wage calculation */}
       {estimatedWage !== null && (
         <div className="bg-gray-50 p-4 rounded-md">
-          <div className="text-sm text-gray-500">Estimated Earnings</div>
+          <div className="text-sm text-gray-500">予想収入</div>
           <div className="text-2xl font-semibold text-gray-900">
             ￥{estimatedWage.toLocaleString()}
           </div>
@@ -253,7 +253,7 @@ const ShiftForm = ({
         size="lg"
         fullWidth
       >
-        {loading ? "Saving..." : "Save Shift"}
+        {loading ? "保存中..." : "シフトを保存"}
       </Button>
     </form>
   );

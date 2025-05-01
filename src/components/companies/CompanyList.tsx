@@ -14,7 +14,7 @@ const CompanyList = ({ companies, onEdit, onDelete }: CompanyListProps) => {
   const handleDeleteClick = (id: string, name: string) => {
     if (
       confirm(
-        `Are you sure you want to delete "${name}"? This cannot be undone.`
+        `「${name}」を削除してもよろしいですか？この操作は元に戻せません。`
       )
     ) {
       onDelete(id);
@@ -23,10 +23,10 @@ const CompanyList = ({ companies, onEdit, onDelete }: CompanyListProps) => {
 
   return (
     <div className="mt-4 bg-white p-4 rounded-lg shadow-sm border">
-      <h2 className="text-xl font-semibold mb-4">Your Companies</h2>
+      <h2 className="text-xl font-semibold mb-4">登録済みの会社</h2>
       {companies.length === 0 ? (
         <p className="text-gray-500 italic py-4">
-          No companies registered yet.
+          まだ会社が登録されていません。
         </p>
       ) : (
         <div className="overflow-hidden">
@@ -34,13 +34,13 @@ const CompanyList = ({ companies, onEdit, onDelete }: CompanyListProps) => {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Company Name
+                  会社名
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Hourly Rate
+                  時給
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
+                  操作
                 </th>
               </tr>
             </thead>
@@ -51,7 +51,7 @@ const CompanyList = ({ companies, onEdit, onDelete }: CompanyListProps) => {
                     {company.name}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-gray-600">
-                    ${company.hourly_wage.toFixed(2)}/hour
+                    ¥{company.hourly_wage.toFixed(0)}/時間
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right">
                     <div className="flex space-x-2 justify-end">
@@ -59,7 +59,7 @@ const CompanyList = ({ companies, onEdit, onDelete }: CompanyListProps) => {
                         onClick={() => onEdit(company)}
                         className="px-3 py-1 text-xs bg-blue-500 hover:bg-blue-600"
                       >
-                        Edit
+                        編集
                       </Button>
                       <Button
                         onClick={() =>
@@ -67,7 +67,7 @@ const CompanyList = ({ companies, onEdit, onDelete }: CompanyListProps) => {
                         }
                         className="px-3 py-1 text-xs bg-red-500 hover:bg-red-600"
                       >
-                        Delete
+                        削除
                       </Button>
                     </div>
                   </td>

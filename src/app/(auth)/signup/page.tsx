@@ -22,13 +22,13 @@ const SignupPage = () => {
 
     // Basic validation
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setError("パスワードが一致しません");
       setLoading(false);
       return;
     }
 
     if (password.length < 6) {
-      setError("Password must be at least 6 characters");
+      setError("パスワードは6文字以上である必要があります");
       setLoading(false);
       return;
     }
@@ -45,14 +45,16 @@ const SignupPage = () => {
         setError(error.message);
       } else {
         if (data.user && !data.user.identities?.length) {
-          setError("Email already exists. Please log in instead.");
+          setError(
+            "このメールアドレスは既に登録されています。ログインしてください。"
+          );
         } else {
           router.push("/calendar");
         }
       }
     } catch (err) {
       console.error("Signup error:", err);
-      setError("An unexpected error occurred. Please try again.");
+      setError("予期せぬエラーが発生しました。もう一度試してください。");
     } finally {
       setLoading(false);
     }
@@ -64,10 +66,10 @@ const SignupPage = () => {
         <div className="card p-8 sm:p-10 shadow-xl rounded-xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-3 primary-gradient bg-clip-text text-transparent">
-              Create Account
+              アカウント作成
             </h1>
             <p className="text-gray-600">
-              Join Shift Tracker to manage your work schedule
+              シフト管理アプリに登録して勤務スケジュールを管理しよう
             </p>
           </div>
 
@@ -83,29 +85,29 @@ const SignupPage = () => {
           <form onSubmit={handleSignup} className="space-y-6">
             <Input
               type="email"
-              placeholder="Email address"
+              placeholder="メールアドレス"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              label="Email"
+              label="メールアドレス"
               className="transition-all duration-200"
             />
             <Input
               type="password"
-              placeholder="Create a password"
+              placeholder="パスワードを作成"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              label="Password"
+              label="パスワード"
               className="transition-all duration-200"
             />
             <Input
               type="password"
-              placeholder="Confirm your password"
+              placeholder="パスワードを確認"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              label="Confirm Password"
+              label="パスワード確認"
               className="transition-all duration-200"
             />
 
@@ -138,22 +140,22 @@ const SignupPage = () => {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  Creating Account...
+                  アカウント作成中...
                 </span>
               ) : (
-                "Create Account"
+                "アカウント作成"
               )}
             </Button>
           </form>
 
           <div className="mt-8 text-center">
             <p className="text-gray-600">
-              Already have an account?{" "}
+              すでにアカウントをお持ちですか？{" "}
               <Link
                 href="/login"
                 className="text-blue-600 hover:text-blue-800 font-medium transition-colors underline"
               >
-                Sign in
+                ログイン
               </Link>
             </p>
           </div>

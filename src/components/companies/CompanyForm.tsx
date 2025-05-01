@@ -39,19 +39,19 @@ const CompanyForm = ({
 
     try {
       if (!user) {
-        setError("You must be logged in to manage companies");
+        setError("会社を管理するにはログインが必要です");
         return;
       }
 
       // Validate inputs
       if (!name.trim()) {
-        setError("Company name is required");
+        setError("会社名は必須です");
         return;
       }
 
       const hourlyWageNum = parseFloat(hourlyWage);
       if (isNaN(hourlyWageNum) || hourlyWageNum <= 0) {
-        setError("Please enter a valid hourly wage (greater than 0)");
+        setError("有効な時給を入力してください（0より大きい値）");
         return;
       }
 
@@ -78,9 +78,9 @@ const CompanyForm = ({
         const errorMessage =
           response.error instanceof Error
             ? response.error.message
-            : "An error occurred while saving the company";
+            : "会社情報の保存中にエラーが発生しました";
 
-        setError(`Error saving company: ${errorMessage}`);
+        setError(`会社の保存エラー: ${errorMessage}`);
         console.error("Form submission error details:", response.error);
       } else {
         console.log("Company saved successfully:", response.data);
@@ -93,7 +93,7 @@ const CompanyForm = ({
       }
     } catch (err) {
       console.error("Unexpected error during form submission:", err);
-      setError("An unexpected error occurred");
+      setError("予期せぬエラーが発生しました");
     } finally {
       setLoading(false);
     }
@@ -105,7 +105,7 @@ const CompanyForm = ({
       className="space-y-4 mb-8 p-4 border rounded-lg shadow-sm bg-white"
     >
       <h2 className="text-xl font-semibold mb-4">
-        {company ? "Update Company" : "Add New Company"}
+        {company ? "会社情報を更新" : "新しい会社を追加"}
       </h2>
 
       {error && (
@@ -119,24 +119,24 @@ const CompanyForm = ({
 
       <Input
         type="text"
-        placeholder="Company Name"
+        placeholder="会社名"
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
-        label="Company Name"
+        label="会社名"
       />
       <Input
         type="number"
-        placeholder="Hourly Wage"
+        placeholder="時給"
         value={hourlyWage}
         onChange={(e) => setHourlyWage(e.target.value)}
         required
         min="0"
         step="10"
-        label="Hourly Wage (¥)"
+        label="時給 (¥)"
       />
       <Button type="submit" disabled={loading} className="w-full">
-        {loading ? "Saving..." : company ? "Update Company" : "Add Company"}
+        {loading ? "保存中..." : company ? "会社を更新" : "会社を追加"}
       </Button>
     </form>
   );
