@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { type Company } from "@/types";
+import { type Company, type Shift } from "@/types";
 import Button from "../ui/Button";
 import useAuth from "@/hooks/useAuth";
 import { shiftService } from "@/services/shiftService";
@@ -10,6 +10,8 @@ interface ShiftFormProps {
   companies: Company[];
   onShiftAdded: () => void;
   initialDate?: string;
+  shift?: Shift; // Add this to support editing
+  isEditing?: boolean; // Add this to indicate edit mode
 }
 
 // Helper function to get color class based on company ID
@@ -58,15 +60,17 @@ const ShiftForm = ({
   companies,
   onShiftAdded,
   initialDate = "",
+  shift,
+  isEditing = false,
 }: ShiftFormProps) => {
   const { user } = useAuth();
-  const [companyId, setCompanyId] = useState<string>("");
-  const [date, setDate] = useState<string>(initialDate);
-  const [startTime, setStartTime] = useState<string>("");
-  const [endTime, setEndTime] = useState<string>("");
+  const [companyId, setCompanyId] = useState<string>(shift?.company_id || "");
+  const [date, setDate] = useState<string>(shift?.date || initialDate);
+  const [startTime, setStartTime] = useState<string>(shift?.start_time || "");
+  const [endTime, setEndTime] = useState<string>(shift?.end_time || "");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [memo, setMemo] = useState<string>("");
+  const [memo, setMemo] = useState<string>(shift?.memo || "");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,16 +89,35 @@ const ShiftForm = ({
         return;
       }
 
-      const { error } = await shiftService.addShift({
-        user_id: user.id,
-        company_id: companyId,
-        date,
-        start_time: startTime,
-        end_time: endTime,
-      });
+      let result;
 
-      if (error) {
-        setError("シフトの追加に失敗しました: " + error.message);
+      if (isEditing && shift) {
+        // Update existing shift
+        result = await shiftService.updateShift(shift.id, {
+          company_id: companyId,
+          date,
+          start_time: startTime,
+          end_time: endTime,
+          memo,
+        });
+      } else {
+        // Add new shift
+        result = await shiftService.addShift({
+          user_id: user.id,
+          company_id: companyId,
+          date,
+          start_time: startTime,
+          end_time: endTime,
+          memo,
+        });
+      }
+
+      if (result.error) {
+        setError(
+          (isEditing ? "シフトの更新" : "シフトの追加") +
+            "に失敗しました: " +
+            result.error.message
+        );
       } else {
         // Reset form and notify parent
         onShiftAdded();
@@ -105,7 +128,10 @@ const ShiftForm = ({
         setMemo("");
       }
     } catch (err) {
-      console.error("Error adding shift:", err);
+      console.error(
+        isEditing ? "Error updating shift:" : "Error adding shift:",
+        err
+      );
       setError("予期せぬエラーが発生しました");
     } finally {
       setLoading(false);
@@ -255,7 +281,7 @@ const ShiftForm = ({
         size="lg"
         fullWidth
       >
-        {loading ? "保存中..." : "シフトを保存"}
+        {loading ? "保存中..." : isEditing ? "シフトを更新" : "シフトを保存"}
       </Button>
     </form>
   );

@@ -5,6 +5,7 @@ import { type Shift, type Company } from "@/types";
 import useAuth from "@/hooks/useAuth";
 import { shiftService } from "@/services/shiftService";
 import Button from "../ui/Button";
+import ShiftForm from "./ShiftForm";
 
 interface ShiftListProps {
   companies?: Company[];
@@ -19,6 +20,8 @@ const ShiftList = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
+  const [editingShift, setEditingShift] = useState<Shift | null>(null);
+  const [showEditForm, setShowEditForm] = useState(false);
 
   const fetchShifts = useCallback(async () => {
     if (!user) return;
@@ -105,6 +108,18 @@ const ShiftList = ({
     }
   };
 
+  // Handle shift editing
+  const handleEditShift = (shift: Shift) => {
+    setEditingShift(shift);
+    setShowEditForm(true);
+  };
+
+  const handleShiftUpdated = () => {
+    setShowEditForm(false);
+    setEditingShift(null);
+    fetchShifts();
+  };
+
   if (loading && shifts.length === 0)
     return <div className="py-4 text-gray-600">シフトを読み込み中...</div>;
 
@@ -142,6 +157,52 @@ const ShiftList = ({
 
   return (
     <div className="mt-8">
+      {/* Shift edit form modal */}
+      {showEditForm && editingShift && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">シフトを編集</h2>
+              <button
+                onClick={() => setShowEditForm(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <ShiftForm
+              companies={companies}
+              onShiftAdded={handleShiftUpdated}
+              shift={editingShift}
+              isEditing={true}
+            />
+
+            <div className="mt-6 flex justify-end space-x-3">
+              <button
+                onClick={() => setShowEditForm(false)}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+              >
+                キャンセル
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
         <h2 className="text-xl font-bold mb-2 sm:mb-0">記録されたシフト</h2>
         <div className="text-left sm:text-right">
@@ -183,7 +244,14 @@ const ShiftList = ({
               </div>
 
               {showControls && (
-                <div className="mt-3 flex justify-end">
+                <div className="mt-3 flex justify-end space-x-2">
+                  <Button
+                    onClick={() => handleEditShift(shift)}
+                    className="text-xs px-2 py-1 bg-blue-500 hover:bg-blue-600"
+                    size="sm"
+                  >
+                    編集
+                  </Button>
                   <Button
                     onClick={() => handleDeleteShift(shift.id)}
                     className="text-xs px-2 py-1 bg-red-500 hover:bg-red-600"
@@ -252,12 +320,20 @@ const ShiftList = ({
                   </td>
                   {showControls && (
                     <td className="px-6 py-4 whitespace-nowrap text-right">
-                      <Button
-                        onClick={() => handleDeleteShift(shift.id)}
-                        className="text-xs bg-red-500 hover:bg-red-600"
-                      >
-                        削除
-                      </Button>
+                      <div className="flex justify-end space-x-2">
+                        <Button
+                          onClick={() => handleEditShift(shift)}
+                          className="text-xs bg-blue-500 hover:bg-blue-600"
+                        >
+                          編集
+                        </Button>
+                        <Button
+                          onClick={() => handleDeleteShift(shift.id)}
+                          className="text-xs bg-red-500 hover:bg-red-600"
+                        >
+                          削除
+                        </Button>
+                      </div>
                     </td>
                   )}
                 </tr>

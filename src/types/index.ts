@@ -20,4 +20,5 @@ export interface Shift {
   start_time: string;
   end_time: string;
   created_at: string;
+  memo?: string; // Add memo field as optional
 }
