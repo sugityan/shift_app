@@ -60,9 +60,9 @@ const Header = () => {
 
   return (
     <header className="bg-white border-b border-gray-200 shadow-sm w-full sticky top-0 z-50">
-      <div className="max-w-full mx-auto px-2 sm:px-3">
+      <div className="max-w-full mx-auto px-2 sm:px-4">
         {/* 横並びに全要素を配置 */}
-        <div className="h-14 flex flex-row items-center justify-between gap-x-4">
+        <div className="h-14 flex flex-row items-center justify-between gap-x-2">
           {/* App logo */}
           <div className="flex-shrink-0">
             <Link
@@ -169,7 +169,7 @@ const Header = () => {
                 </Link>
               </>
             )}
-            {/* Mobile menu button */}
+            {/* Mobile menu button - always visible on mobile */}
             <div className="md:hidden">
               <button
                 type="button"
@@ -218,20 +218,22 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu - improved for touch and better visibility */}
       <div
-        className={`${isMenuOpen ? "block" : "hidden"} md:hidden`}
+        className={`${
+          isMenuOpen ? "block" : "hidden"
+        } md:hidden border-t border-gray-200`}
         id="mobile-menu"
       >
-        <div className="px-3 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
+        <div className="px-3 pt-2 pb-3 space-y-1 bg-white shadow-md">
           {isLoggedIn ? (
             <>
-              {/* Mobile view toggle */}
+              {/* Mobile view toggle - made more touch-friendly */}
               {pathname.includes("calendar") && (
-                <div className="flex items-center bg-gray-100 rounded-lg p-1 mb-2">
+                <div className="flex items-center bg-gray-100 rounded-lg p-1 mb-4">
                   <button
                     onClick={() => setCurrentView("monthly")}
-                    className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-colors duration-200 ${
+                    className={`flex-1 py-2.5 text-sm font-medium rounded-md transition-colors duration-200 ${
                       currentView === "monthly"
                         ? "bg-emerald-500 text-white shadow"
                         : "text-gray-600"
@@ -241,7 +243,7 @@ const Header = () => {
                   </button>
                   <button
                     onClick={() => setCurrentView("weekly")}
-                    className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-colors duration-200 ${
+                    className={`flex-1 py-2.5 text-sm font-medium rounded-md transition-colors duration-200 ${
                       currentView === "weekly"
                         ? "bg-emerald-500 text-white shadow"
                         : "text-gray-600"
@@ -252,23 +254,24 @@ const Header = () => {
                 </div>
               )}
 
+              {/* Menu links with larger touch targets */}
               <Link
                 href="/calendar"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                className="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
                 onClick={() => setIsMenuOpen(false)}
               >
                 カレンダー
               </Link>
               <Link
                 href="/account"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                className="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
                 onClick={() => setIsMenuOpen(false)}
               >
                 アカウント設定
               </Link>
               <Link
                 href="/settings"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                className="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
                 onClick={() => setIsMenuOpen(false)}
               >
                 会社設定
@@ -278,7 +281,7 @@ const Header = () => {
                   handleSignOut();
                   setIsMenuOpen(false);
                 }}
-                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                className="block w-full text-left px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
               >
                 ログアウト
               </button>
@@ -287,14 +290,14 @@ const Header = () => {
             <>
               <Link
                 href="/login"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                className="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
                 onClick={() => setIsMenuOpen(false)}
               >
                 ログイン
               </Link>
               <Link
                 href="/signup"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                className="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
                 onClick={() => setIsMenuOpen(false)}
               >
                 新規登録

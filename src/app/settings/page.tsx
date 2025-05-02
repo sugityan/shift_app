@@ -77,8 +77,8 @@ const SettingsPage = () => {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="mt-4 text-black">読み込み中...</p>
+          <div className="animate-spin rounded-full h-12 w-12 sm:h-16 sm:w-16 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
+          <p className="mt-4 text-sm sm:text-base text-black">読み込み中...</p>
         </div>
       </div>
     );
@@ -91,19 +91,19 @@ const SettingsPage = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       <Header />
-      <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 fade-in">
-        <h1 className="text-3xl font-bold text-center mb-8 text-black">
+      <div className="w-full mx-auto p-2 sm:px-4 md:px-6 lg:px-8 sm:py-6 md:py-8 fade-in">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-3 sm:mb-6 md:mb-8 text-black">
           会社管理
         </h1>
 
         {error && (
           <div
-            className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg relative mb-6 transform transition-all animate-pulse"
+            className="bg-red-50 border border-red-200 text-red-700 px-2 py-2 sm:px-4 sm:py-3 rounded-lg relative mb-3 sm:mb-6"
             role="alert"
           >
-            <div className="flex items-center">
+            <div className="flex flex-wrap sm:flex-nowrap items-center">
               <svg
-                className="w-5 h-5 mr-2"
+                className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2 flex-shrink-0"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -114,32 +114,37 @@ const SettingsPage = () => {
                   clipRule="evenodd"
                 ></path>
               </svg>
-              <strong className="font-medium">エラー:</strong>
-              <span className="ml-2">{error}</span>
+              <strong className="font-medium text-xs sm:text-sm md:text-base">
+                エラー:
+              </strong>
+              <span className="ml-1 sm:ml-2 text-xs sm:text-sm md:text-base">
+                {error}
+              </span>
             </div>
           </div>
         )}
 
-        <div className="card p-6 sm:p-8 mb-8 hover:shadow-xl transition-shadow duration-300 rounded-xl bg-white">
-          <h2 className="text-xl font-semibold mb-4 text-black">
+        <div className="mb-3 sm:mb-6 md:mb-8 bg-white rounded-lg shadow-sm">
+          <h2 className="text-base sm:text-lg md:text-xl font-semibold p-3 sm:p-4 border-b">
             {editingCompany ? "会社を編集" : "新しい会社を追加"}
           </h2>
-          <CompanyForm
-            company={editingCompany}
-            onSubmit={handleCompanySubmit}
-          />
+          <div>
+            <CompanyForm
+              company={editingCompany}
+              onSubmit={handleCompanySubmit}
+            />
+          </div>
         </div>
 
         {loading && companies.length === 0 ? (
-          <div className="card p-12 text-center text-black rounded-xl bg-white">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
-            <p className="mt-4">会社情報を読み込み中...</p>
+          <div className="p-4 sm:p-6 md:p-12 text-center text-black rounded-lg bg-white shadow-sm">
+            <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
+            <p className="mt-3 sm:mt-4 text-xs sm:text-sm md:text-base">
+              会社情報を読み込み中...
+            </p>
           </div>
         ) : (
-          <div className="card p-6 sm:p-8 hover:shadow-xl transition-shadow duration-300 rounded-xl bg-white">
-            <h2 className="text-xl font-semibold mb-4 text-black">
-              登録済みの会社
-            </h2>
+          <div className="bg-white rounded-lg shadow-sm">
             <CompanyList
               companies={companies}
               onEdit={handleEditCompany}

@@ -142,9 +142,9 @@ const ShiftList = ({
 
   return (
     <div className="mt-8">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">記録されたシフト</h2>
-        <div className="text-right">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+        <h2 className="text-xl font-bold mb-2 sm:mb-0">記録されたシフト</h2>
+        <div className="text-left sm:text-right">
           <p className="text-sm text-gray-600">
             合計時間:{" "}
             <span className="font-semibold">{totalHours.toFixed(2)}</span>
@@ -156,7 +156,50 @@ const ShiftList = ({
         </div>
       </div>
 
-      <div className="overflow-x-auto bg-white rounded-lg shadow border">
+      {/* Mobile shift cards - shown on small screens */}
+      <div className="md:hidden space-y-3">
+        {shifts.map((shift) => {
+          const hoursWorked = calculateHours(shift.start_time, shift.end_time);
+          const payAmount = calculatePay(shift);
+          const companyName = getCompanyName(shift.company_id);
+
+          return (
+            <div
+              key={shift.id}
+              className="bg-white rounded-lg shadow border p-4"
+            >
+              <div className="flex justify-between items-start mb-2">
+                <div className="font-medium">
+                  {new Date(shift.date).toLocaleDateString()}
+                </div>
+                <div className="font-medium text-emerald-600">
+                  ￥{payAmount.toFixed(0)}
+                </div>
+              </div>
+              <div className="text-sm text-gray-500 mb-1">{companyName}</div>
+              <div className="text-sm text-gray-700 mb-2">
+                {shift.start_time} - {shift.end_time} ({hoursWorked.toFixed(1)}
+                時間)
+              </div>
+
+              {showControls && (
+                <div className="mt-3 flex justify-end">
+                  <Button
+                    onClick={() => handleDeleteShift(shift.id)}
+                    className="text-xs px-2 py-1 bg-red-500 hover:bg-red-600"
+                    size="sm"
+                  >
+                    削除
+                  </Button>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Desktop table - hidden on small screens */}
+      <div className="hidden md:block overflow-x-auto bg-white rounded-lg shadow border">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>

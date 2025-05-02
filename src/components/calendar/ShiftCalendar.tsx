@@ -5,6 +5,7 @@ import { Calendar, momentLocalizer, SlotInfo, Views } from "react-big-calendar";
 import moment from "moment";
 import "moment/locale/ja"; // 日本語ロケールをインポート
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./ShiftCalendar.css"; // We'll create this file for custom mobile styles
 import useAuth from "@/hooks/useAuth";
 import { type Shift, type Company } from "@/types";
 import ShiftForm from "../shifts/ShiftForm";

@@ -150,12 +150,12 @@ const ShiftForm = ({
         </div>
       )}
 
-      {/* Company selection (TimeTree-like) */}
+      {/* Company selection (TimeTree-like) - responsive grid */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
           会社
         </label>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2">
           {companies.map((company) => (
             <div
               key={company.id}
@@ -171,8 +171,10 @@ const ShiftForm = ({
                 }
               `}
             >
-              <div className="font-medium">{company.name}</div>
-              <div className="text-sm text-gray-600">
+              <div className="font-medium text-sm md:text-base">
+                {company.name}
+              </div>
+              <div className="text-xs md:text-sm text-gray-600">
                 ¥{company.hourly_wage}/時間
               </div>
             </div>
@@ -190,12 +192,12 @@ const ShiftForm = ({
           value={date}
           onChange={(e) => setDate(e.target.value)}
           required
-          className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+          className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
         />
       </div>
 
-      {/* Time inputs with TimeTree-like styling */}
-      <div className="grid grid-cols-2 gap-4">
+      {/* Time inputs with TimeTree-like styling - responsive grid */}
+      <div className="grid grid-cols-2 gap-2 sm:gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             開始時間
@@ -205,7 +207,7 @@ const ShiftForm = ({
             value={startTime}
             onChange={(e) => setStartTime(e.target.value)}
             required
-            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+            className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
           />
         </div>
         <div>
@@ -217,7 +219,7 @@ const ShiftForm = ({
             value={endTime}
             onChange={(e) => setEndTime(e.target.value)}
             required
-            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+            className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
           />
         </div>
       </div>
@@ -231,16 +233,16 @@ const ShiftForm = ({
           value={memo}
           onChange={(e) => setMemo(e.target.value)}
           rows={2}
-          className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+          className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
           placeholder="このシフトに関するメモを追加..."
         />
       </div>
 
       {/* Estimated wage calculation */}
       {estimatedWage !== null && (
-        <div className="bg-gray-50 p-4 rounded-md">
-          <div className="text-sm text-gray-500">予想収入</div>
-          <div className="text-2xl font-semibold text-gray-900">
+        <div className="bg-gray-50 p-3 sm:p-4 rounded-md">
+          <div className="text-xs sm:text-sm text-gray-500">予想収入</div>
+          <div className="text-xl sm:text-2xl font-semibold text-gray-900">
             ￥{estimatedWage.toLocaleString()}
           </div>
         </div>

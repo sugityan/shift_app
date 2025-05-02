@@ -1,0 +1,173 @@
+/* Mobile responsive styles for the calendar */
+@media screen and (max-width: 768px) {
+  /* Make the calendar fit on small screens */
+  .rbc-calendar {
+    width: 100%;
+    min-height: 400px;
+    max-width: 100%;
+    font-size: 11px;
+  }
+
+  /* Force container to respect viewport width */
+  .calendar-container {
+    max-width: 100%;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Adjust header and buttons for small screens */
+  .rbc-toolbar {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .rbc-toolbar-label {
+    margin: 8px 0;
+    font-size: 14px;
+  }
+
+  .rbc-btn-group {
+    margin: 5px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Make buttons more compact */
+  .rbc-btn-group button {
+    padding: 4px 6px;
+    font-size: 10px;
+    margin: 1px;
+  }
+
+  /* Adjust calendar dimensions to fit small screens */
+  .rbc-month-view {
+    width: auto;
+    max-width: 100%;
+    min-width: unset;
+  }
+
+  .rbc-month-row {
+    min-width: unset;
+  }
+
+  /* Improve readability for day cells on small screens */
+  .rbc-month-view .rbc-header {
+    padding: 2px;
+    font-size: 10px;
+  }
+
+  .rbc-month-view .rbc-day-bg {
+    min-height: 40px;
+  }
+
+  /* Adjust event rendering on mobile */
+  .rbc-event {
+    padding: 0 2px !important;
+    font-size: 8px !important;
+    margin: 0 !important;
+    border-radius: 1px !important;
+  }
+
+  /* Make event title more readable */
+  .rbc-event-content {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 8px;
+  }
+
+  /* Adjust the time grid view for mobile */
+  .rbc-time-view {
+    font-size: 10px;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .rbc-time-header-content {
+    min-height: 30px;
+  }
+
+  /* Adjust date cells */
+  .rbc-date-cell {
+    text-align: center;
+    padding: 0;
+    font-size: 10px;
+  }
+
+  /* Collapse days of the week */
+  .rbc-header {
+    padding: 2px 0 !important;
+  }
+
+  /* Adjust day cell dimensions */
+  .rbc-day-bg {
+    padding: 0 !important;
+    box-sizing: border-box;
+  }
+
+  /* Adjust weekly view */
+  .rbc-time-content {
+    font-size: 9px;
+  }
+
+  /* Reduce calendar margins and paddings */
+  .rbc-calendar {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+
+/* Extra small screens (phones in portrait) */
+@media screen and (max-width: 480px) {
+  .rbc-calendar {
+    min-height: 350px;
+    font-size: 9px;
+  }
+
+  /* Even smaller buttons on extra small screens */
+  .rbc-btn-group button {
+    padding: 3px 5px;
+    font-size: 9px;
+    margin: 1px;
+  }
+
+  /* Further reduce event font size */
+  .rbc-event {
+    padding: 0 1px !important;
+    font-size: 7px !important;
+    border-radius: 1px !important;
+  }
+
+  /* Show less of day label on small screens */
+  .rbc-month-view .rbc-date-cell {
+    text-align: center;
+    font-size: 9px;
+  }
+
+  .rbc-row-content {
+    width: auto;
+    overflow: hidden;
+  }
+
+  /* Further reduce header font size */
+  .rbc-header span,
+  .rbc-header a {
+    font-size: 8px;
+  }
+
+  /* Make the add button smaller on mobile */
+  .fixed.bottom-6.right-6 {
+    bottom: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .fixed.bottom-6.right-6 svg {
+    height: 1rem;
+    width: 1rem;
+  }
+}
