@@ -55,12 +55,6 @@ const CompanyForm = ({
         return;
       }
 
-      console.log("Submitting company with:", {
-        name,
-        hourly_wage: hourlyWageNum,
-        user_id: user.id,
-      });
-
       // Use service layer to add/update company
       const response = company
         ? await companyService.updateCompany(company.id, {
@@ -100,44 +94,47 @@ const CompanyForm = ({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-4 mb-8 p-4 border rounded-lg shadow-sm bg-white"
-    >
-      <h2 className="text-xl font-semibold mb-4">
-        {company ? "会社情報を更新" : "新しい会社を追加"}
-      </h2>
-
+    <form onSubmit={handleSubmit} className="p-3 space-y-4">
       {error && (
         <div
-          className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg"
+          className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 sm:px-4 sm:py-3 text-sm rounded-lg"
           role="alert"
         >
           <span className="block sm:inline">{error}</span>
         </div>
       )}
 
-      <Input
-        type="text"
-        placeholder="会社名"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-        label="会社名"
-      />
-      <Input
-        type="number"
-        placeholder="時給"
-        value={hourlyWage}
-        onChange={(e) => setHourlyWage(e.target.value)}
-        required
-        min="0"
-        step="10"
-        label="時給 (¥)"
-      />
-      <Button type="submit" disabled={loading} className="w-full">
-        {loading ? "保存中..." : company ? "会社を更新" : "会社を追加"}
-      </Button>
+      <div className="mb-3">
+        <Input
+          type="text"
+          placeholder="会社名"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          label="会社名"
+          className="w-full"
+        />
+      </div>
+
+      <div className="mb-3">
+        <Input
+          type="number"
+          placeholder="時給"
+          value={hourlyWage}
+          onChange={(e) => setHourlyWage(e.target.value)}
+          required
+          min="0"
+          step="10"
+          label="時給 (¥)"
+          className="w-full"
+        />
+      </div>
+
+      <div className="pt-2">
+        <Button type="submit" disabled={loading} className="w-full" size="md">
+          {loading ? "保存中..." : company ? "会社を更新" : "会社を追加"}
+        </Button>
+      </div>
     </form>
   );
 };

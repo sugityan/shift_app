@@ -5,6 +5,7 @@ import { Calendar, momentLocalizer, SlotInfo, Views } from "react-big-calendar";
 import moment from "moment";
 import "moment/locale/ja"; // 日本語ロケールをインポート
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./ShiftCalendar.css"; // We'll create this file for custom mobile styles
 import useAuth from "@/hooks/useAuth";
 import { type Shift, type Company } from "@/types";
 import ShiftForm from "../shifts/ShiftForm";
@@ -129,6 +130,7 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
   const [view, setView] = useState<
     "month" | "week" | "day" | "work_week" | "agenda"
   >(Views.MONTH);
+  const [editingShift, setEditingShift] = useState<Shift | null>(null);
 
   // Current date for the month/week display
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -244,6 +246,13 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
   const handleSelect = (slotInfo: SlotInfo) => {
     const { start } = slotInfo;
     setSelectedDate(start);
+    setEditingShift(null); // Reset editing shift when selecting new slot
+    setShowForm(true);
+  };
+
+  const handleEventClick = (event: CalendarEvent) => {
+    // When clicking on an existing event, open the form with that shift data
+    setEditingShift(event.resource);
     setShowForm(true);
   };
 
@@ -253,6 +262,7 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
 
   const handleShiftAdded = () => {
     setShowForm(false);
+    setEditingShift(null);
     fetchShifts();
   };
 
@@ -369,10 +379,12 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
           <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold">
-                {selectedDate
+                {editingShift
+                  ? "シフトを編集"
+                  : selectedDate
                   ? moment(selectedDate).format("YYYY年M月D日")
                   : "新規"}
-                のシフト追加
+                {!editingShift && "のシフト追加"}
               </h2>
               <button
                 onClick={() => setShowForm(false)}
@@ -399,6 +411,8 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
               companies={companies}
               onShiftAdded={handleShiftAdded}
               initialDate={formatDateForForm(selectedDate)}
+              shift={editingShift || undefined}
+              isEditing={!!editingShift}
             />
 
             <div className="mt-6 flex justify-end space-x-3">
@@ -441,6 +455,7 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
           style={{ height: 700 }}
           selectable
           onSelectSlot={handleSelect}
+          onSelectEvent={handleEventClick}
           views={["month", "week"]}
           view={view}
           onView={(newView: string) => setView(newView as "month" | "week")}
@@ -453,7 +468,7 @@ const ShiftCalendar = ({ companies = [] }: ShiftCalendarProps) => {
           eventPropGetter={() => {
             // The colors are now handled in the TimeTreeEvent component
             return {
-              className: "border-0",
+              className: "border-0 cursor-pointer",
             };
           }}
           dayPropGetter={(date: Date) => {
