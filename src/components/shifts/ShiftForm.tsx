@@ -8,7 +8,7 @@ import { shiftService } from "@/services/shiftService";
 
 interface ShiftFormProps {
   companies: Company[];
-  onShiftAdded: () => void;
+  onShiftAdded: (newShift?: Shift) => void;
   initialDate?: string;
   shift?: Shift; // Add this to support editing
   isEditing?: boolean; // Add this to indicate edit mode
@@ -119,8 +119,14 @@ const ShiftForm = ({
             result.error.message
         );
       } else {
-        // Reset form and notify parent
-        onShiftAdded();
+        // 成功した場合、新しいシフトデータを親コンポーネントに渡す
+        if (result.data) {
+          onShiftAdded(result.data);
+        } else {
+          onShiftAdded(); // データがない場合は引数なしで呼び出し
+        }
+        
+        // フォームをリセット
         setCompanyId("");
         setDate(initialDate);
         setStartTime("");
